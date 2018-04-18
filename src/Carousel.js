@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import './Carousel.css';
+import arrowLeft from './icons/ios-arrow-left.svg'
+import arrowRight from './icons/ios-arrow-right.svg'
 
 class Carousel extends Component {
     constructor(props) {
@@ -16,8 +18,11 @@ class Carousel extends Component {
     
     
 
+    componentDidMount() {
+        window.addEventListener('keydown', this.handleKeyDown);
+    }
       
-  nextImage () {
+    nextImage () {
     if
     (this.state.imageNumber === this.state.numberOfImages) { 
     this.setState({
@@ -52,6 +57,15 @@ class Carousel extends Component {
       });
   }
 
+  handleKeyDown = (event) => {
+    if(event.keyCode === 37 ){
+        this.previousImage()
+        }
+    else if(event.keyCode === 39 ){
+            this.nextImage()
+            }    
+  }
+
   render() {
 
     const url = `../images/carousel${this.state.imageNumber}.jpg`
@@ -73,6 +87,7 @@ class Carousel extends Component {
 
     return (
       <div className="carousel-wrapper">
+      <h1>Garousel.js</h1>
       
             <div className="carousel-image">
             <img src={url} />
@@ -98,8 +113,8 @@ class Carousel extends Component {
             </div> 
       
         <div className="carousel-controls">
-            <button onClick={this.previousImage}>previous</button>
-            <button onClick={this.nextImage}>next</button>
+            <img src={arrowLeft} onClick={this.previousImage} />
+            <img src={arrowRight} onClick={this.nextImage} />
         </div>
       </div>
     );
